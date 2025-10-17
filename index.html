@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>THE JEWELRY MYANMAR</title>
+  <title>Luxe Jewelry</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    img { object-fit: cover; }
+  </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-amber-50 to-white">
 
@@ -14,7 +17,7 @@
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <div class="flex items-center gap-2">
         <i data-lucide="shopping-bag" class="w-8 h-8"></i>
-        <h1 class="text-3xl font-bold">THE JEWELRY MYANMAR</h1>
+        <h1 class="text-3xl font-bold">Luxe Jewelry</h1>
       </div>
       <button id="adminBtn" class="text-sm bg-white text-amber-700 px-4 py-2 rounded-lg hover:bg-amber-50 transition font-semibold">
         Admin
@@ -39,6 +42,7 @@
         <button id="loginBtn" class="w-full bg-gradient-to-r from-amber-600 to-amber-700 text-white py-2 rounded-lg font-semibold hover:from-amber-700 hover:to-amber-800 transition">Login</button>
         <button id="cancelLogin" class="w-full border-2 border-gray-300 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-50 transition">Cancel</button>
       </div>
+      <p class="text-xs text-gray-500 mt-4 text-center">Demo: password is "admin123"</p>
     </div>
   </div>
 
@@ -70,6 +74,7 @@
     </nav>
 
     <div class="max-w-6xl mx-auto p-6 grid md:grid-cols-3 gap-6">
+      <!-- Add Form -->
       <div class="md:col-span-1 bg-white rounded-lg shadow-md p-6">
         <h2 class="text-xl font-bold mb-4 text-gray-800">Add New Jewelry</h2>
         <div class="space-y-4">
@@ -78,7 +83,13 @@
             <option>Rings</option><option>Necklaces</option><option>Bracelets</option><option>Earrings</option><option>Pendants</option><option>Brooches</option>
           </select>
           <input id="jPrice" type="number" placeholder="Price ($)" class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-amber-500" />
-          <input id="jImage" placeholder="💎" maxlength="2" class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-amber-500" />
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Product Image</label>
+            <input id="jImage" type="file" accept="image/*" class="w-full border border-gray-300 rounded px-3 py-2" />
+            <img id="imagePreview" class="mt-2 rounded-lg w-full h-40 object-cover hidden" />
+          </div>
+
           <textarea id="jDesc" rows="3" placeholder="Description" class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-amber-500 resize-none"></textarea>
           <button id="addJewelry" class="w-full bg-gradient-to-r from-amber-600 to-amber-700 text-white py-2 rounded-lg font-semibold hover:from-amber-700 hover:to-amber-800 transition flex items-center justify-center gap-2">
             <i data-lucide="plus" class="w-5 h-5"></i> Add Jewelry
@@ -86,6 +97,7 @@
         </div>
       </div>
 
+      <!-- Inventory List -->
       <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6">
         <h2 class="text-xl font-bold mb-4 text-gray-800">Inventory (<span id="count"></span>)</h2>
         <div id="inventoryList" class="space-y-3 max-h-96 overflow-y-auto"></div>
@@ -101,7 +113,9 @@
         <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">✕</button>
       </div>
       <div class="grid md:grid-cols-2 gap-6">
-        <div id="modalImage" class="bg-gradient-to-b from-amber-100 to-amber-50 h-64 flex items-center justify-center text-8xl rounded-lg"></div>
+        <div class="bg-gradient-to-b from-amber-100 to-amber-50 h-64 flex items-center justify-center rounded-lg">
+          <img id="modalImage" class="h-64 w-full object-cover rounded-lg" />
+        </div>
         <div class="space-y-4">
           <p><span class="text-sm text-gray-600">Category</span><br><span id="modalCategory" class="text-lg font-semibold text-gray-800"></span></p>
           <p><span class="text-sm text-gray-600">Price</span><br><span id="modalPrice" class="text-3xl font-bold text-amber-700"></span></p>
@@ -115,18 +129,17 @@
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="bg-gray-800 text-white mt-16 py-8 text-center">
-    <p>&copy; 2023 THE JEWELRY MYANMAR. All rights reserved.</p>
+    <p>&copy; 2024 Luxe Jewelry. All rights reserved.</p>
   </footer>
 
   <script>
     lucide.createIcons();
 
-    // Initial data
+    // Default jewelry data
     let jewelries = [
-      { id: 1, name: 'Diamond Engagement Ring', category: 'Rings', price: 2500, image: '💎', description: 'Stunning 1.5 carat diamond ring' },
-      { id: 2, name: 'Gold Necklace', category: 'Necklaces', price: 1200, image: '✨', description: '18K Gold chain necklace' },
+      { id: 1, name: 'Diamond Engagement Ring', category: 'Rings', price: 2500, image: 'https://images.unsplash.com/photo-1600180758890-6b94519a4d00?auto=format&fit=crop&w=800&q=80', description: 'Stunning 1.5 carat diamond ring' },
+      { id: 2, name: 'Gold Necklace', category: 'Necklaces', price: 1200, image: 'https://images.unsplash.com/photo-1587929651402-1b94b17f3c3a?auto=format&fit=crop&w=800&q=80', description: '18K Gold chain necklace' },
     ];
     let selectedCategory = 'All Items';
     let isAdmin = false;
@@ -134,6 +147,22 @@
     const productGrid = document.getElementById('productGrid');
     const inventoryList = document.getElementById('inventoryList');
     const categoryButtons = document.getElementById('categoryButtons');
+    const imageInput = document.getElementById('jImage');
+    const imagePreview = document.getElementById('imagePreview');
+
+    imageInput.onchange = () => {
+      const file = imageInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          imagePreview.src = e.target.result;
+          imagePreview.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+      } else {
+        imagePreview.classList.add('hidden');
+      }
+    };
 
     function renderCategories() {
       const categories = [...new Set(jewelries.map(j => j.category))];
@@ -150,7 +179,9 @@
       document.getElementById('noItems').classList.toggle('hidden', filtered.length > 0);
       productGrid.innerHTML = filtered.map(j => `
         <div class="bg-white rounded-lg shadow-lg hover:shadow-2xl transition transform hover:scale-105 overflow-hidden">
-          <div class="bg-gradient-to-b from-amber-100 to-amber-50 h-48 flex items-center justify-center text-6xl">${j.image}</div>
+          <div class="bg-gradient-to-b from-amber-100 to-amber-50 h-48 flex items-center justify-center">
+            <img src="${j.image}" class="h-48 w-full object-cover" />
+          </div>
           <div class="p-6">
             <div class="flex justify-between items-start mb-2">
               <h3 class="text-xl font-bold text-gray-800">${j.name}</h3>
@@ -170,14 +201,13 @@
       document.getElementById('count').textContent = jewelries.length;
       inventoryList.innerHTML = jewelries.map(j => `
         <div class="border border-gray-200 rounded-lg p-4 flex justify-between">
-          <div>
-            <div class="flex items-center gap-2 mb-1">
-              <span class="text-2xl">${j.image}</span>
+          <div class="flex gap-3">
+            <img src="${j.image}" class="w-16 h-16 object-cover rounded" />
+            <div>
               <h3 class="font-semibold text-gray-800">${j.name}</h3>
-              <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded">${j.category}</span>
+              <p class="text-sm text-gray-600 mb-1">${j.category}</p>
+              <p class="font-bold text-amber-700">$${j.price.toFixed(2)}</p>
             </div>
-            <p class="text-sm text-gray-600 mb-1">${j.description}</p>
-            <p class="font-bold text-amber-700">$${j.price.toFixed(2)}</p>
           </div>
           <button onclick="deleteJewelry(${j.id})" class="text-red-500 hover:text-red-700"><i data-lucide='trash-2'></i></button>
         </div>
@@ -197,19 +227,16 @@
       document.getElementById('modalCategory').textContent = j.category;
       document.getElementById('modalPrice').textContent = '$' + j.price.toFixed(2);
       document.getElementById('modalDesc').textContent = j.description;
-      document.getElementById('modalImage').textContent = j.image;
-      document.getElementById('productModal').classList.remove('hidden');
-      document.getElementById('productModal').classList.add('flex');
+      document.getElementById('modalImage').src = j.image;
+      document.getElementById('productModal').classList.replace('hidden','flex');
     }
 
     function deleteJewelry(id) {
       jewelries = jewelries.filter(j => j.id !== id);
-      renderInventory();
-      renderProducts();
-      renderCategories();
+      renderInventory(); renderProducts(); renderCategories();
     }
 
-    // Modal + Admin Logic
+    // Admin Logic
     document.getElementById('adminBtn').onclick = () => document.getElementById('loginModal').classList.replace('hidden','flex');
     document.getElementById('cancelLogin').onclick = () => document.getElementById('loginModal').classList.add('hidden');
 
@@ -247,23 +274,19 @@
       const name = jName.value.trim();
       const cat = jCategory.value;
       const price = parseFloat(jPrice.value);
-      const image = jImage.value || '💎';
       const desc = jDesc.value.trim();
-      if (!name || !price) return alert('Please fill all fields');
+      if (!name || !price || !imagePreview.src) return alert('Please fill all fields and add an image');
 
-      jewelries.push({ id: Date.now(), name, category: cat, price, image, description: desc });
-      jName.value = ''; jPrice.value=''; jImage.value='💎'; jDesc.value='';
-      renderInventory();
-      renderProducts();
-      renderCategories();
+      jewelries.push({ id: Date.now(), name, category: cat, price, image: imagePreview.src, description: desc });
+      jName.value = ''; jPrice.value=''; jDesc.value=''; imagePreview.classList.add('hidden'); imageInput.value='';
+      renderInventory(); renderProducts(); renderCategories();
       alert('Jewelry added successfully!');
     };
 
     document.getElementById('closeModal').onclick = () => document.getElementById('productModal').classList.add('hidden');
     document.getElementById('closeProduct').onclick = () => document.getElementById('productModal').classList.add('hidden');
 
-    renderCategories();
-    renderProducts();
+    renderCategories(); renderProducts();
   </script>
 </body>
 </html>
